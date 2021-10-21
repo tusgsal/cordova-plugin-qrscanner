@@ -237,6 +237,12 @@ class QRScanner : CDVPlugin, AVCaptureMetadataOutputObjectsDelegate {
             // while nothing is detected, or if scanning is false, do nothing.
             return
         }
+
+        scanning = false
+        let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "ITF")
+        commandDelegate!.send(pluginResult, callbackId: nextScanningCommand?.callbackId!)
+        nextScanningCommand = nil        
+        /*
         let found = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
         if found.type == AVMetadataObject.ObjectType.qr && found.stringValue != nil {
             scanning = false
@@ -244,6 +250,7 @@ class QRScanner : CDVPlugin, AVCaptureMetadataOutputObjectsDelegate {
             commandDelegate!.send(pluginResult, callbackId: nextScanningCommand?.callbackId!)
             nextScanningCommand = nil
         }
+        */
     }
 
     @objc func pageDidLoad() {
